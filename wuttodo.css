@@ -1,0 +1,94 @@
+html{
+	font-family: Nobile-Regular;
+}
+@font-face{
+	font-family: Nobile-Regular;
+	src: url("/Nobile-Regular.ttf");
+}
+.newListContainer{
+	width: 50%;
+	margin: 0 auto;
+	text-align: center;
+}
+#newListButton{
+	border: 1px dashed;
+	padding: 2px;
+	width: 10%;
+	margin: 0 auto;
+	cursor:pointer;
+}
+#newListButton:hover{
+	border-style:solid;
+}
+.todoList{
+	width: 50%;
+	margin: 0 auto;
+	text-align: center;
+}
+.todoList > ul{
+	margin:0 auto;
+	width:35%;
+	text-align: left;
+}
+.todoDelete{
+	font-style: normal;
+	display: none;
+	color:red;
+	text-decoration: none !important;
+}
+.todoComplete{
+	font-style: normal;
+	line-height: 1;
+	display: none;
+	color: green;
+	text-decoration: none !important;
+}
+.todo:hover .todoDelete, .todo:hover .todoComplete{
+	padding: 0;
+	display:inline-block;
+}
+.listNameInput{
+	font-family: Nobile-Regular;
+	font-size: 24px;
+	text-align: center;
+	border: 0;
+}
+.newTodo > input {
+	width: 35%;
+}
+.todo{
+	cursor: pointer;
+}
+.completed{
+	font-style: italic;
+	color: grey;
+}
+.goodjob{
+	display:none;
+	font-size:12px;
+	font-style: italic;
+	color:grey;
+	position: absolute;
+	margin-left: 50px;
+}
+.stats, .privacyLink{
+	position: fixed;
+	bottom:0;
+	color: grey;
+	font-size: 10px;
+}
+a:visited {
+    color: inherit;
+}
+.createdAt{
+	font-size: 10px;
+	font-style: italic;
+	color: grey;
+}
+.privacyLink{
+	margin-left: 45%;
+}
+.privacy{
+	width:50%;
+	margin: 0 auto;
+}
