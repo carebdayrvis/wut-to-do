@@ -57,6 +57,7 @@ html{
 	width: 35%;
 }
 .todo{
+	word-wrap:break-word;
 	cursor: pointer;
 }
 .completed{
@@ -69,7 +70,7 @@ html{
 	font-style: italic;
 	color:grey;
 	position: absolute;
-	margin-left: 50px;
+	margin-left: 300px;
 }
 .stats, .privacyLink{
 	position: fixed;
@@ -88,7 +89,4 @@ a:visited {
 .privacyLink{
 	margin-left: 45%;
 }
-.privacy{
-	width:50%;
-	margin: 0 auto;
-}
+

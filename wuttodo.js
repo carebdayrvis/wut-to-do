@@ -84,9 +84,17 @@ if(Meteor.isClient){
       }
     }  
   });
+var timeTick = new Deps.Dependency();
+Meteor.setInterval(function(){
+	timeTick.changed();
+}, 2000);
+fromNowReactive = function(moment){
+	timeTick.depend();
+	return moment.fromNow();
+}
   Template.entry.helpers({
     createdAt: function(){
-      return moment(this.createdAt).fromNow();
+      return fromNowReactive(moment(this.createdAt));
     }
   });
   Template.stats.helpers({
