@@ -1,11 +1,6 @@
 <head>
   <title>wut to-do</title>
 </head>
-<template name='privacy'>
-<div>
-<p class='privacy'>When you delete a to-do list item, it doesn't actually delete them. It stores them in a separate place that allows us to show you how many you have done! If you don't want to persist that information, click the 'Delete List' link on the list page, and by Grabthar's Hammer, they will be totally removed from everything.</p>
-</div>
-</template>
 
 <template name='newList'>
 <div class='newListContainer'>
@@ -34,7 +29,6 @@
 <input class='hideComplete' type='checkbox' checked='{{hideComplete}}'>
 </div>
 <p>{{> stats}}</p>
-<a href='/privacy' class='privacyLink'>Where do they go when I delete them?</a>
 </template>
 
 <template name='entry'>

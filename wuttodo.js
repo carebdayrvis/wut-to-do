@@ -1,10 +1,6 @@
 var Lists = new Mongo.Collection('lists');
 var Tasks = new Mongo.Collection('todos');
-var HistoryList = new Mongo.Collection('history');
 var id;
-Router.route('/privacy', function(){
-  this.render('privacy');
-});
 Router.route('/', function(){
   this.render('newList');
 });
@@ -74,7 +70,11 @@ if(Meteor.isClient){
   });
   Template.entry.events({
     'click .todoDelete': function(){
-      HistoryList.insert(this);
+      if(this.complete){
+	Meteor.call('incCompletedRemoved', id);
+      } else {
+        Meteor.call('incJustRemoved', id);
+     } 
       Tasks.remove(this._id);
     },
     'click .todoComplete': function(event){
@@ -91,22 +91,27 @@ if(Meteor.isClient){
   });
   Template.stats.helpers({
     completedRemoved: function(){
-      var number = HistoryList.find({listId: id, complete: true}).fetch();
-      return number.length;
+      var number = Lists.findOne({listId: id});
+      return number && number.completedRemoved;
     },
     justRemoved: function(){
-      var number = HistoryList.find({listId: id, complete: false}).fetch();
-      return number.length;
+      var number = Lists.findOne({listId: id});
+      return number && number.justRemoved;
     }
   })
 }
 Meteor.methods({
   createNewList: function(listId){
-    Lists.insert({listId: listId, name: 'Todo List'});
+    Lists.insert({listId: listId, name: 'Todo List', justRemoved: 0, completedRemoved: 0});
   },
   deleteList: function(id){
     Lists.remove({listId: id});
     Tasks.remove({listId: id});
-    HistoryList.remove({listId: id});
+  },
+  incCompletedRemoved: function(id){
+    Lists.update({listId: id}, {$inc: {completedRemoved: 1}});
+  },
+  incJustRemoved: function(id){
+    Lists.update({listId: id}, {$inc: {justRemoved: 1}});
   }
 });
