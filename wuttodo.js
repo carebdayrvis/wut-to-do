@@ -15,6 +15,7 @@ Router.route('/:listId', function(){
     alert('This is your new Todo list! It is accesible without authentication via this specific URL. ' + 
         'Do not lose this URL! Go ahead and bookmark it now.');
         }, 500);
+  Session.set('newList', false);
   }
   Session.set('listId', this.params.listId);
   this.render('todoList');
