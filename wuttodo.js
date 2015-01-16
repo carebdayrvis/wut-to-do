@@ -41,6 +41,9 @@ if(Meteor.isClient){
     'change .hideComplete': function(event){
       Session.set("hideComplete", event.target.checked);
     },
+    'change .sortAscending': function(event){
+      Session.set('sortAscending', event.target.checked);
+    },
     'click .newListLink': function(event){
       var cancel = confirm('Did you bookmark this page? Do so if you want to keep this to-do list!');
       if(!cancel){
@@ -61,10 +64,14 @@ if(Meteor.isClient){
   });
   Template.todoList.helpers({
     entries: function(){
-      if(Session.get('hideComplete')){
-        return Tasks.find({listId: Session.get('listId'), complete: {$ne: true}}, {sort: {createdAt: -1}});
-      } else {
+      if(Session.get('hideComplete') && Session.get('sortAscending')){
+        return Tasks.find({listId: Session.get('listId'), complete: {$ne: true}}, {sort: {createdAt: 1}});
+      } else if(!Session.get('hideComplete') && !Session.get('sortAscending')){
         return Tasks.find({listId: Session.get('listId')}, {sort: {createdAt: -1}});
+      } else if(!Session.get('hideComplete') && Session.get('sortAscending')){
+        return Tasks.find({listId: Session.get('listId')}, {sort: {createdAt: 1}});
+      } else if(Session.get('hideComplete') && !Session.get('sortAscending')){
+        return Tasks.find({listId: Session.get('listId'), complete: {$ne: true}}, {sort: {createdAt: -1}});
       }
     }
   });
