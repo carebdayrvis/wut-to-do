@@ -17,7 +17,7 @@
 <div class="todoList">
 <br>
 <span class='goodjob'>Good job!</span>
-<ul>
+<ul class='entries'>
 {{#each entries}}
 {{> entry}}
 {{/each}}
@@ -36,18 +36,19 @@
 </template>
 
 <template name='entry'>
+<li class='todo'>
 {{#if complete}}
-<li class='todo completed'><strike>{{text}}</strike>
-<span class='todoDelete'>x</span>
-<span class='todoComplete' id='{{_id}}'>&#8617;</span>
-</li>
+<span class='todoContent {{priorityClassHelper}} completed'>{{text}}</span>
 {{else}}
-<li class='todo'>{{text}}
-<span class='todoDelete'>x</span>
-<span class='todoComplete' id='{{_id}}'>&#10003;</span>
-</li>
+<form class='editTask'>
+<span class='todoContent {{priorityClassHelper}}' spellcheck='false' contentEditable='true'>{{text}}</span>
+</form>
 {{/if}}
-<span class='createdAt'>{{createdAt}}</span>
+<span class='todoDelete'>x</span>
+<span class='todoComplete'>{{completedHelper}}</span>
+<span class='todoPriority'>!</span> 
+</li>
+<span class='createdAt'>{{createdAtHelper}}</span>
 </template>
 
 <template name='stats'>

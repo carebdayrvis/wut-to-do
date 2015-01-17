@@ -43,7 +43,11 @@ html{
 	color: green;
 	text-decoration: none !important;
 }
-.todo:hover .todoDelete, .todo:hover .todoComplete{
+.todoPriority{
+	font-style:bold;
+	display:none;
+}
+.todo:hover > .todoDelete, .todo:hover > .todoComplete, .todo:hover > .todoPriority{
 	padding: 0;
 	display:inline-block;
 }
@@ -61,6 +65,7 @@ html{
 	cursor: pointer;
 }
 .completed{
+	text-decoration:line-through;
 	font-style: italic;
 	color: grey;
 }
@@ -86,7 +91,10 @@ a:visited {
 	font-style: italic;
 	color: grey;
 }
-.privacyLink{
-	margin-left: 45%;
+.editTask{
+	cursor:text;
+	display:inline-block
 }
-
+.priority{
+	background-color:yellow;
+}

@@ -51,10 +51,10 @@ if(Meteor.isClient){
       }
     },
     'submit .newTodo': function(event){
-      var text = event.target.text.value;
-      Tasks.insert({
+      event.preventDefault();
+			Tasks.insert({
         listId: Session.get('listId'),
-        text: text,
+        text: event.target.text.value,
         createdAt: new Date(),
         complete: false  
       });
@@ -76,9 +76,12 @@ if(Meteor.isClient){
     }
   });
   Template.entry.events({
+		'click .todoPriority': function(){
+			Tasks.update(this._id, {$set: {priority: ! this.priority}});
+		},
     'click .todoDelete': function(){
       if(this.complete){
-	Meteor.call('incCompletedRemoved', id);
+				Meteor.call('incCompletedRemoved', id);
       } else {
         Meteor.call('incJustRemoved', id);
      } 
@@ -89,7 +92,15 @@ if(Meteor.isClient){
       if(!this.complete){
         $('.goodjob').show().fadeOut(500);
       }
-    }  
+    },
+		'keydown .editTask':function(event){
+			if(event.keyCode == 13){
+				event.preventDefault();
+				$(event.target).blur();
+				Tasks.update(this._id, {$set: {text: event.target.innerHTML}});
+				event.target.innerHTML = '';
+			}
+		}  
   });
 var timeTick = new Deps.Dependency();
 Meteor.setInterval(function(){
@@ -100,9 +111,23 @@ fromNowReactive = function(moment){
 	return moment.fromNow();
 }
   Template.entry.helpers({
-    createdAt: function(){
+    createdAtHelper: function(){
       return fromNowReactive(moment(this.createdAt));
-    }
+    },
+		priorityClassHelper: function(){
+			if(this.priority){
+				return 'priority';
+			} else {
+				return false;
+			}
+		},
+		completedHelper: function(){
+			if(this.complete){
+				return '\u21A9';
+			} else {
+				return '\u2713';
+			}
+		}
   });
   Template.stats.helpers({
     completedRemoved: function(){
@@ -128,5 +153,9 @@ Meteor.methods({
   },
   incJustRemoved: function(id){
     Lists.update({listId: id}, {$inc: {justRemoved: 1}});
-  }
+  }, 
+	updateTask: function(id, options){
+		console.log(id, options);
+		Tasks.update({id: id}, options);
+	}
 });
